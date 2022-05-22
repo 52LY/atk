@@ -9,7 +9,9 @@ type ProgressBar struct {
 	BaseWidget
 }
 
-func NewProgressBar(parent Widget, orient Orient, attributes ...*WidgetAttr) *ProgressBar {
+// orient Orient
+// orient: "vertical", "horizontal"
+func NewProgressBar(parent Widget, orient string, attributes ...*WidgetAttr) *ProgressBar {
 	iid := makeNamedWidgetId(parent, "atk_progressbar")
 	attributes = append(attributes, &WidgetAttr{"orient", orient})
 	info := CreateWidgetInfo(iid, WidgetTypeProgressBar, true, attributes)
@@ -34,41 +36,48 @@ func (w *ProgressBar) Attach(id string) error {
 	return nil
 }
 
-func (w *ProgressBar) SetOrient(orient Orient) error {
-	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewProgressBar(parent Widget, orient string) ==> ttk.ProgressBar
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
 
-func (w *ProgressBar) Orient() Orient {
-	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
-	return parserOrientResult(r, err)
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *ProgressBar) SetOrient(orient Orient) error {
+// 	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
+// }
 
-func (w *ProgressBar) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *ProgressBar) Orient() Orient {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
+// 	return parserOrientResult(r, err)
+// }
 
-func (w *ProgressBar) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *ProgressBar) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
 
-func (w *ProgressBar) SetLength(length int) error {
-	return eval(fmt.Sprintf("%v configure -length {%v}", w.id, length))
-}
+// func (w *ProgressBar) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
-func (w *ProgressBar) Length() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -length", w.id))
-	return r
-}
+// func (w *ProgressBar) SetLength(length int) error {
+// 	return eval(fmt.Sprintf("%v configure -length {%v}", w.id, length))
+// }
 
-func (w *ProgressBar) SetMaximum(maximum float64) error {
-	return eval(fmt.Sprintf("%v configure -maximum {%v}", w.id, maximum))
-}
+// func (w *ProgressBar) Length() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -length", w.id))
+// 	return r
+// }
 
-func (w *ProgressBar) Maximum() float64 {
-	r, _ := evalAsFloat64(fmt.Sprintf("%v cget -maximum", w.id))
-	return r
-}
+// func (w *ProgressBar) SetMaximum(maximum float64) error {
+// 	return eval(fmt.Sprintf("%v configure -maximum {%v}", w.id, maximum))
+// }
+
+// func (w *ProgressBar) Maximum() float64 {
+// 	r, _ := evalAsFloat64(fmt.Sprintf("%v cget -maximum", w.id))
+// 	return r
+// }
 
 func (w *ProgressBar) SetValue(value float64) error {
 	return eval(fmt.Sprintf("%v configure -value {%v}", w.id, value))
@@ -84,20 +93,20 @@ func (w *ProgressBar) Phase() int {
 	return r
 }
 
-func (w *ProgressBar) SetDeterminateMode(b bool) error {
-	var mode string
-	if b {
-		mode = "determinate"
-	} else {
-		mode = "indeterminate"
-	}
-	return eval(fmt.Sprintf("%v configure -mode %v", w.id, mode))
-}
+// func (w *ProgressBar) SetDeterminateMode(b bool) error {
+// 	var mode string
+// 	if b {
+// 		mode = "determinate"
+// 	} else {
+// 		mode = "indeterminate"
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -mode %v", w.id, mode))
+// }
 
-func (w *ProgressBar) IsDeterminateMode() bool {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -mode", w.id))
-	return r == "determinate"
-}
+// func (w *ProgressBar) IsDeterminateMode() bool {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -mode", w.id))
+// 	return r == "determinate"
+// }
 
 func (w *ProgressBar) Start() error {
 	return w.StartEx(50)
@@ -117,22 +126,22 @@ func (w *ProgressBar) Pause() error {
 	return w.SetValue(cur)
 }
 
-func ProgressBarAttrOrient(orient Orient) *WidgetAttr {
-	return &WidgetAttr{"orient", orient}
-}
+// func ProgressBarAttrOrient(orient Orient) *WidgetAttr {
+// 	return &WidgetAttr{"orient", orient}
+// }
 
-func ProgressBarAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func ProgressBarAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
 
-func ProgressBarAttrLength(length int) *WidgetAttr {
-	return &WidgetAttr{"length", length}
-}
+// func ProgressBarAttrLength(length int) *WidgetAttr {
+// 	return &WidgetAttr{"length", length}
+// }
 
-func ProgressBarAttrMaximum(maximum float64) *WidgetAttr {
-	return &WidgetAttr{"maximum", maximum}
-}
+// func ProgressBarAttrMaximum(maximum float64) *WidgetAttr {
+// 	return &WidgetAttr{"maximum", maximum}
+// }
 
-func ProgressBarAttrValue(value float64) *WidgetAttr {
-	return &WidgetAttr{"value", value}
-}
+// func ProgressBarAttrValue(value float64) *WidgetAttr {
+// 	return &WidgetAttr{"value", value}
+// }
