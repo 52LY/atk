@@ -13,7 +13,9 @@ type ScrollBar struct {
 	command *CommandEx
 }
 
-func NewScrollBar(parent Widget, orient Orient, attributes ...*WidgetAttr) *ScrollBar {
+// orient Orient
+// orient: "vertical", "horizontal"
+func NewScrollBar(parent Widget, orient string, attributes ...*WidgetAttr) *ScrollBar {
 	theme := checkInitUseTheme(attributes)
 	iid := makeNamedWidgetId(parent, "atk_scrollbar")
 	attributes = append(attributes, &WidgetAttr{"orient", orient})
@@ -39,23 +41,32 @@ func (w *ScrollBar) Attach(id string) error {
 	return nil
 }
 
-func (w *ScrollBar) SetOrient(orient Orient) error {
-	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewScrollBar(parent Widget, orient string) ==> ttk.ScrollBar
+// tk.NewScrollBar(parent Widget, orient string, useTkWidget) ==> tk.ScrollBar
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : 
 
-func (w *ScrollBar) Orient() Orient {
-	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
-	return parserOrientResult(r, err)
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *ScrollBar) SetOrient(orient Orient) error {
+// 	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
+// }
 
-func (w *ScrollBar) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *ScrollBar) Orient() Orient {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
+// 	return parserOrientResult(r, err)
+// }
 
-func (w *ScrollBar) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *ScrollBar) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
+
+// func (w *ScrollBar) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
 func (w *ScrollBar) SetScroll(first float64, last float64) error {
 	err := eval(fmt.Sprintf("%v set %v %v", w.id, first, last))
@@ -79,10 +90,11 @@ func (w *ScrollBar) OnCommandEx(fn func([]string) error) error {
 	return nil
 }
 
-func ScrollBarAttrOrient(orient Orient) *WidgetAttr {
-	return &WidgetAttr{"orient", orient}
-}
+// 简化
+// func ScrollBarAttrOrient(orient Orient) *WidgetAttr {
+// 	return &WidgetAttr{"orient", orient}
+// }
 
-func ScrollBarAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func ScrollBarAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
