@@ -36,92 +36,102 @@ func (w *RadioButton) Attach(id string) error {
 	return nil
 }
 
-func (w *RadioButton) SetText(text string) error {
-	setObjText("atk_tmp_text", text)
-	return eval(fmt.Sprintf("%v configure -text $atk_tmp_text", w.id))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewRadioButton(parent Widget, text string) ==> ttk.RadioButton
+// tk.NewRadioButton(parent Widget, text string, useTkWidget) ==> tk.RadioButton
 
-func (w *RadioButton) Text() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -text", w.id))
-	return r
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : 
 
-func (w *RadioButton) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *RadioButton) SetText(text string) error {
+// 	setObjText("atk_tmp_text", text)
+// 	return eval(fmt.Sprintf("%v configure -text $atk_tmp_text", w.id))
+// }
 
-func (w *RadioButton) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
+// func (w *RadioButton) Text() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -text", w.id))
+// 	return r
+// }
 
-func (w *RadioButton) SetImage(image *Image) error {
-	if image == nil {
-		return ErrInvalid
-	}
-	return eval(fmt.Sprintf("%v configure -image {%v}", w.id, image.Id()))
-}
+// func (w *RadioButton) SetWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
+// }
 
-func (w *RadioButton) Image() *Image {
-	r, err := evalAsString(fmt.Sprintf("%v cget -image", w.id))
-	return parserImageResult(r, err)
-}
+// func (w *RadioButton) Width() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
+// 	return r
+// }
 
-func (w *RadioButton) SetCompound(compound Compound) error {
-	return eval(fmt.Sprintf("%v configure -compound {%v}", w.id, compound))
-}
+// func (w *RadioButton) SetImage(image *Image) error {
+// 	if image == nil {
+// 		return ErrInvalid
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -image {%v}", w.id, image.Id()))
+// }
 
-func (w *RadioButton) Compound() Compound {
-	r, err := evalAsString(fmt.Sprintf("%v cget -compound", w.id))
-	return parserCompoundResult(r, err)
-}
+// func (w *RadioButton) Image() *Image {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -image", w.id))
+// 	return parserImageResult(r, err)
+// }
 
-func (w *RadioButton) SetPaddingN(padx int, pady int) error {
-	if w.info.IsTtk {
-		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
-	}
-	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
-}
+// func (w *RadioButton) SetCompound(compound Compound) error {
+// 	return eval(fmt.Sprintf("%v configure -compound {%v}", w.id, compound))
+// }
 
-func (w *RadioButton) PaddingN() (int, int) {
-	var r string
-	var err error
-	if w.info.IsTtk {
-		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
-	} else {
-		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
-		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
-		r = r1 + " " + r2
-	}
-	return parserPaddingResult(r, err)
-}
+// func (w *RadioButton) Compound() Compound {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -compound", w.id))
+// 	return parserCompoundResult(r, err)
+// }
 
-func (w *RadioButton) SetPadding(pad Pad) error {
-	return w.SetPaddingN(pad.X, pad.Y)
-}
+// func (w *RadioButton) SetPaddingN(padx int, pady int) error {
+// 	if w.info.IsTtk {
+// 		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
+// }
 
-func (w *RadioButton) Padding() Pad {
-	x, y := w.PaddingN()
-	return Pad{x, y}
-}
+// func (w *RadioButton) PaddingN() (int, int) {
+// 	var r string
+// 	var err error
+// 	if w.info.IsTtk {
+// 		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
+// 	} else {
+// 		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
+// 		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
+// 		r = r1 + " " + r2
+// 	}
+// 	return parserPaddingResult(r, err)
+// }
 
-func (w *RadioButton) SetState(state State) error {
-	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
-}
+// func (w *RadioButton) SetPadding(pad Pad) error {
+// 	return w.SetPaddingN(pad.X, pad.Y)
+// }
 
-func (w *RadioButton) State() State {
-	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
-	return parserStateResult(r, err)
-}
+// func (w *RadioButton) Padding() Pad {
+// 	x, y := w.PaddingN()
+// 	return Pad{x, y}
+// }
 
-func (w *RadioButton) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *RadioButton) SetState(state State) error {
+// 	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
+// }
 
-func (w *RadioButton) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *RadioButton) State() State {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
+// 	return parserStateResult(r, err)
+// }
+
+// func (w *RadioButton) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
+
+// func (w *RadioButton) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
 func (w *RadioButton) SetChecked(check bool) *RadioButton {
 	if check {
@@ -153,33 +163,34 @@ func (w *RadioButton) Invoke() {
 	eval(fmt.Sprintf("%v invoke", w.id))
 }
 
-func RadioButtonAttrText(text string) *WidgetAttr {
-	return &WidgetAttr{"text", text}
-}
+// 简化
+// func RadioButtonAttrText(text string) *WidgetAttr {
+// 	return &WidgetAttr{"text", text}
+// }
 
-func RadioButtonAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
+// func RadioButtonAttrWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"width", width}
+// }
 
-func RadioButtonAttrImage(image *Image) *WidgetAttr {
-	if image == nil {
-		return nil
-	}
-	return &WidgetAttr{"image", image.Id()}
-}
+// func RadioButtonAttrImage(image *Image) *WidgetAttr {
+// 	if image == nil {
+// 		return nil
+// 	}
+// 	return &WidgetAttr{"image", image.Id()}
+// }
 
-func RadioButtonAttrCompound(compound Compound) *WidgetAttr {
-	return &WidgetAttr{"compound", compound}
-}
+// func RadioButtonAttrCompound(compound Compound) *WidgetAttr {
+// 	return &WidgetAttr{"compound", compound}
+// }
 
-func RadioButtonAttrPadding(padding Pad) *WidgetAttr {
-	return &WidgetAttr{"padding", padding}
-}
+// func RadioButtonAttrPadding(padding Pad) *WidgetAttr {
+// 	return &WidgetAttr{"padding", padding}
+// }
 
-func RadioButtonAttrState(state State) *WidgetAttr {
-	return &WidgetAttr{"state", state}
-}
+// func RadioButtonAttrState(state State) *WidgetAttr {
+// 	return &WidgetAttr{"state", state}
+// }
 
-func RadioButtonAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func RadioButtonAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
