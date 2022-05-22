@@ -82,6 +82,18 @@ func (w *BaseWidget) NativeAttribute(key string) string {
 	return r
 }
 
+// ConfigGet = NativeAttribute
+func (w *BaseWidget) ConfigGet(key string) string {
+	if !IsValidWidget(w) {
+		return ""
+	}
+	if !w.info.MetaClass.HasAttribute(key) {
+		return ""
+	}
+	r, _ := evalAsString(fmt.Sprintf("%v cget -%v", w.id, key))
+	return r
+}
+
 func (w *BaseWidget) NativeAttributes(keys ...string) (attributes []NativeAttr) {
 	if !IsValidWidget(w) {
 		return nil
@@ -103,6 +115,11 @@ func (w *BaseWidget) NativeAttributes(keys ...string) (attributes []NativeAttr) 
 }
 
 func (w *BaseWidget) SetNativeAttribute(key string, value string) error {
+	return w.SetNativeAttributes([]NativeAttr{NativeAttr{key, value}}...)
+}
+
+// ConfigSet = SetNativeAttribute
+func (w *BaseWidget) ConfigSet(key string, value string) error {
 	return w.SetNativeAttributes([]NativeAttr{NativeAttr{key, value}}...)
 }
 
