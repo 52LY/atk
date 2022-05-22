@@ -2,7 +2,7 @@
 
 package tk
 
-import "fmt"
+// import "fmt"
 
 // tk::label
 type Label struct {
