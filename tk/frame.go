@@ -2,7 +2,7 @@
 
 package tk
 
-import "fmt"
+// import "fmt"
 
 // frame
 type Frame struct {
