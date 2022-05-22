@@ -34,132 +34,140 @@ func (w *Menu) Attach(id string) error {
 	return nil
 }
 
-func (w *Menu) SetFont(font Font) error {
-	if font == nil {
-		return ErrInvalid
-	}
-	return eval(fmt.Sprintf("%v configure -font {%v}", w.id, font.Id()))
-}
+// tk.NewMenu(parent Widget) ==> tk.Menu
 
-func (w *Menu) Font() Font {
-	r, err := evalAsString(fmt.Sprintf("%v cget -font", w.id))
-	return parserFontResult(r, err)
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : 
 
-func (w *Menu) SetActiveBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -activebackground $atk_tmp_text", w.id))
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *Menu) SetFont(font Font) error {
+// 	if font == nil {
+// 		return ErrInvalid
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -font {%v}", w.id, font.Id()))
+// }
 
-func (w *Menu) ActiveBackground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -activebackground", w.id))
-	return r
-}
+// func (w *Menu) Font() Font {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -font", w.id))
+// 	return parserFontResult(r, err)
+// }
 
-func (w *Menu) SetActiveForground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -activeforeground $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetActiveBackground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -activebackground $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) ActiveForground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -activeforeground", w.id))
-	return r
-}
+// func (w *Menu) ActiveBackground() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -activebackground", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -background $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetActiveForground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -activeforeground $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) Background() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -background", w.id))
-	return r
-}
+// func (w *Menu) ActiveForground() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -activeforeground", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetForground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -foreground $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetBackground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -background $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) Forground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -foreground", w.id))
-	return r
-}
+// func (w *Menu) Background() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -background", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetSelectColor(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -selectcolor $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetForground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -foreground $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) SelectColor() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -selectcolor", w.id))
-	return r
-}
+// func (w *Menu) Forground() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -foreground", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetDisabledForground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -disabledforeground $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetSelectColor(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -selectcolor $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) DisabledForground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -disabledforeground", w.id))
-	return r
-}
+// func (w *Menu) SelectColor() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -selectcolor", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetActiveBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -activeborderwidth {%v}", w.id, width))
-}
+// func (w *Menu) SetDisabledForground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -disabledforeground $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) ActiveBorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -activeborderwidth", w.id))
-	return r
-}
+// func (w *Menu) DisabledForground() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -disabledforeground", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
-}
+// func (w *Menu) SetActiveBorderWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -activeborderwidth {%v}", w.id, width))
+// }
 
-func (w *Menu) BorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
-	return r
-}
+// func (w *Menu) ActiveBorderWidth() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -activeborderwidth", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetReliefStyle(relief ReliefStyle) error {
-	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
-}
+// func (w *Menu) SetBorderWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
+// }
 
-func (w *Menu) ReliefStyle() ReliefStyle {
-	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
-	return parserReliefStyleResult(r, err)
-}
+// func (w *Menu) BorderWidth() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetTearoffTitle(title string) error {
-	setObjText("atk_tmp_text", title)
-	return eval(fmt.Sprintf("%v configure -title $atk_tmp_text", w.id))
-}
+// func (w *Menu) SetReliefStyle(relief ReliefStyle) error {
+// 	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
+// }
 
-func (w *Menu) TearoffTitle() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -title", w.id))
-	return r
-}
+// func (w *Menu) ReliefStyle() ReliefStyle {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
+// 	return parserReliefStyleResult(r, err)
+// }
 
-func (w *Menu) SetTearoff(tearoff bool) error {
-	return eval(fmt.Sprintf("%v configure -tearoff {%v}", w.id, boolToInt(tearoff)))
-}
+// func (w *Menu) SetTearoffTitle(title string) error {
+// 	setObjText("atk_tmp_text", title)
+// 	return eval(fmt.Sprintf("%v configure -title $atk_tmp_text", w.id))
+// }
 
-func (w *Menu) IsTearoff() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -tearoff", w.id))
-	return r
-}
+// func (w *Menu) TearoffTitle() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -title", w.id))
+// 	return r
+// }
 
-func (w *Menu) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *Menu) SetTearoff(tearoff bool) error {
+// 	return eval(fmt.Sprintf("%v configure -tearoff {%v}", w.id, boolToInt(tearoff)))
+// }
 
-func (w *Menu) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *Menu) IsTearoff() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -tearoff", w.id))
+// 	return r
+// }
+
+// func (w *Menu) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
+
+// func (w *Menu) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
 func (w *Menu) AddSubMenu(label string, sub *Menu) error {
 	setObjText("atk_tmp_label", label)
@@ -285,57 +293,58 @@ func PopupMenu(menu *Menu, xpos int, ypos int) error {
 	return eval(fmt.Sprintf("tk_popup %v %v %v", menu.Id(), xpos, ypos))
 }
 
-func MenuAttrFont(font Font) *WidgetAttr {
-	if font == nil {
-		return nil
-	}
-	return &WidgetAttr{"font", font.Id()}
-}
+// 简化
+// func MenuAttrFont(font Font) *WidgetAttr {
+// 	if font == nil {
+// 		return nil
+// 	}
+// 	return &WidgetAttr{"font", font.Id()}
+// }
 
-func MenuAttrActiveBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"activebackground", color}
-}
+// func MenuAttrActiveBackground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"activebackground", color}
+// }
 
-func MenuAttrActiveForground(color string) *WidgetAttr {
-	return &WidgetAttr{"activeforeground", color}
-}
+// func MenuAttrActiveForground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"activeforeground", color}
+// }
 
-func MenuAttrBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"background", color}
-}
+// func MenuAttrBackground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"background", color}
+// }
 
-func MenuAttrForground(color string) *WidgetAttr {
-	return &WidgetAttr{"foreground", color}
-}
+// func MenuAttrForground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"foreground", color}
+// }
 
-func MenuAttrSelectColor(color string) *WidgetAttr {
-	return &WidgetAttr{"selectcolor", color}
-}
+// func MenuAttrSelectColor(color string) *WidgetAttr {
+// 	return &WidgetAttr{"selectcolor", color}
+// }
 
-func MenuAttrDisabledForground(color string) *WidgetAttr {
-	return &WidgetAttr{"disabledforeground", color}
-}
+// func MenuAttrDisabledForground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"disabledforeground", color}
+// }
 
-func MenuAttrActiveBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"activeborderwidth", width}
-}
+// func MenuAttrActiveBorderWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"activeborderwidth", width}
+// }
 
-func MenuAttrBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"borderwidth", width}
-}
+// func MenuAttrBorderWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"borderwidth", width}
+// }
 
-func MenuAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
-	return &WidgetAttr{"relief", relief}
-}
+// func MenuAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
+// 	return &WidgetAttr{"relief", relief}
+// }
 
-func MenuAttrTearoffTitle(title string) *WidgetAttr {
-	return &WidgetAttr{"title", title}
-}
+// func MenuAttrTearoffTitle(title string) *WidgetAttr {
+// 	return &WidgetAttr{"title", title}
+// }
 
-func MenuAttrTearoff(tearoff bool) *WidgetAttr {
-	return &WidgetAttr{"tearoff", boolToInt(tearoff)}
-}
+// func MenuAttrTearoff(tearoff bool) *WidgetAttr {
+// 	return &WidgetAttr{"tearoff", boolToInt(tearoff)}
+// }
 
-func MenuAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func MenuAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
