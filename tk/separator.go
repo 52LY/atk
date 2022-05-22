@@ -9,7 +9,9 @@ type Separator struct {
 	BaseWidget
 }
 
-func NewSeparator(parent Widget, orient Orient, attributes ...*WidgetAttr) *Separator {
+// orient Orient
+// orient: "vertical", "horizontal"
+func NewSeparator(parent Widget, orient string, attributes ...*WidgetAttr) *Separator {
 	iid := makeNamedWidgetId(parent, "atk_separator")
 	attributes = append(attributes, &WidgetAttr{"orient", orient})
 	info := CreateWidgetInfo(iid, WidgetTypeSeparator, true, attributes)
@@ -34,28 +36,35 @@ func (w *Separator) Attach(id string) error {
 	return nil
 }
 
-func (w *Separator) SetOrient(orient Orient) error {
-	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
-}
+// tk.NewSeparator(parent Widget, orient string) ==> ttk.Separator
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : 
 
-func (w *Separator) Orient() Orient {
-	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
-	return parserOrientResult(r, err)
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *Separator) SetOrient(orient Orient) error {
+// 	return eval(fmt.Sprintf("%v configure -orient {%v}", w.id, orient))
+// }
 
-func (w *Separator) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *Separator) Orient() Orient {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -orient", w.id))
+// 	return parserOrientResult(r, err)
+// }
 
-func (w *Separator) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *Separator) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
 
-func SeparatorAttrOrient(orient Orient) *WidgetAttr {
-	return &WidgetAttr{"orient", orient}
-}
+// func (w *Separator) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
-func SeparatorAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func SeparatorAttrOrient(orient Orient) *WidgetAttr {
+// 	return &WidgetAttr{"orient", orient}
+// }
+
+// func SeparatorAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
