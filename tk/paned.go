@@ -9,7 +9,9 @@ type Paned struct {
 	BaseWidget
 }
 
-func NewPaned(parent Widget, orient Orient, attributes ...*WidgetAttr) *Paned {
+// orient Orient
+// orient: "vertical", "horizontal"
+func NewPaned(parent Widget, orient string, attributes ...*WidgetAttr) *Paned {
 	iid := makeNamedWidgetId(parent, "atk_paned")
 	attributes = append(attributes, &WidgetAttr{"orient", orient})
 	info := CreateWidgetInfo(iid, WidgetTypePaned, true, attributes)
@@ -34,23 +36,33 @@ func (w *Paned) Attach(id string) error {
 	return nil
 }
 
-func (w *Paned) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewPaned(parent Widget, orient string) ==> ttk.Paned
+// tk.NewPaned(parent Widget, orient string, useTkWidget) ==> tk.Paned
 
-func (w *Paned) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : 
 
-func (w *Paned) SetHeight(height int) error {
-	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *Paned) SetWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
+// }
 
-func (w *Paned) Height() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
-	return r
-}
+// func (w *Paned) Width() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
+// 	return r
+// }
+
+// func (w *Paned) SetHeight(height int) error {
+// 	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
+// }
+
+// func (w *Paned) Height() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
+// 	return r
+// }
 
 func (w *Paned) AddWidget(widget Widget, weight int) error {
 	if !IsValidWidget(widget) {
@@ -74,10 +86,11 @@ func (w *Paned) RemovePane(pane int) error {
 	return eval(fmt.Sprintf("%v forget %v", w.id, pane))
 }
 
-func PanedAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
+// 简化
+// func PanedAttrWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"width", width}
+// }
 
-func PanedAttrHeight(height int) *WidgetAttr {
-	return &WidgetAttr{"height", height}
-}
+// func PanedAttrHeight(height int) *WidgetAttr {
+// 	return &WidgetAttr{"height", height}
+// }
