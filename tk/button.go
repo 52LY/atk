@@ -36,92 +36,102 @@ func (w *Button) Attach(id string) error {
 	return nil
 }
 
-func (w *Button) SetText(text string) error {
-	setObjText("atk_tmp_text", text)
-	return eval(fmt.Sprintf("%v configure -text $atk_tmp_text", w.id))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewButton(parent Widget, text string) ==> ttk.Button
+// tk.NewButton(parent Widget, text string, useTkWidget) ==> tk.Button
 
-func (w *Button) Text() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -text", w.id))
-	return r
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : compound,cursor,image,state,takefocus,text,underline,width,padding
+// tk key : 
 
-func (w *Button) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
+// 以下设置和属性获取使用ConfigSet和ConfigGet
+// func (w *Button) SetText(text string) error {
+// 	setObjText("atk_tmp_text", text)
+// 	return eval(fmt.Sprintf("%v configure -text $atk_tmp_text", w.id))
+// }
 
-func (w *Button) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
+// func (w *Button) Text() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -text", w.id))
+// 	return r
+// }
 
-func (w *Button) SetImage(image *Image) error {
-	if image == nil {
-		return ErrInvalid
-	}
-	return eval(fmt.Sprintf("%v configure -image {%v}", w.id, image.Id()))
-}
+// func (w *Button) SetWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
+// }
 
-func (w *Button) Image() *Image {
-	r, err := evalAsString(fmt.Sprintf("%v cget -image", w.id))
-	return parserImageResult(r, err)
-}
+// func (w *Button) Width() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
+// 	return r
+// }
 
-func (w *Button) SetCompound(compound Compound) error {
-	return eval(fmt.Sprintf("%v configure -compound {%v}", w.id, compound))
-}
+// func (w *Button) SetImage(image *Image) error {
+// 	if image == nil {
+// 		return ErrInvalid
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -image {%v}", w.id, image.Id()))
+// }
 
-func (w *Button) Compound() Compound {
-	r, err := evalAsString(fmt.Sprintf("%v cget -compound", w.id))
-	return parserCompoundResult(r, err)
-}
+// func (w *Button) Image() *Image {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -image", w.id))
+// 	return parserImageResult(r, err)
+// }
 
-func (w *Button) SetPaddingN(padx int, pady int) error {
-	if w.info.IsTtk {
-		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
-	}
-	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
-}
+// func (w *Button) SetCompound(compound Compound) error {
+// 	return eval(fmt.Sprintf("%v configure -compound {%v}", w.id, compound))
+// }
 
-func (w *Button) PaddingN() (int, int) {
-	var r string
-	var err error
-	if w.info.IsTtk {
-		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
-	} else {
-		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
-		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
-		r = r1 + " " + r2
-	}
-	return parserPaddingResult(r, err)
-}
+// func (w *Button) Compound() Compound {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -compound", w.id))
+// 	return parserCompoundResult(r, err)
+// }
 
-func (w *Button) SetPadding(pad Pad) error {
-	return w.SetPaddingN(pad.X, pad.Y)
-}
+// func (w *Button) SetPaddingN(padx int, pady int) error {
+// 	if w.info.IsTtk {
+// 		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
+// }
 
-func (w *Button) Padding() Pad {
-	x, y := w.PaddingN()
-	return Pad{x, y}
-}
+// func (w *Button) PaddingN() (int, int) {
+// 	var r string
+// 	var err error
+// 	if w.info.IsTtk {
+// 		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
+// 	} else {
+// 		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
+// 		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
+// 		r = r1 + " " + r2
+// 	}
+// 	return parserPaddingResult(r, err)
+// }
 
-func (w *Button) SetState(state State) error {
-	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
-}
+// func (w *Button) SetPadding(pad Pad) error {
+// 	return w.SetPaddingN(pad.X, pad.Y)
+// }
 
-func (w *Button) State() State {
-	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
-	return parserStateResult(r, err)
-}
+// func (w *Button) Padding() Pad {
+// 	x, y := w.PaddingN()
+// 	return Pad{x, y}
+// }
 
-func (w *Button) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *Button) SetState(state State) error {
+// 	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
+// }
 
-func (w *Button) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *Button) State() State {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
+// 	return parserStateResult(r, err)
+// }
+
+// func (w *Button) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
+
+// func (w *Button) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
 func (w *Button) OnCommand(fn func()) error {
 	if fn == nil {
@@ -139,33 +149,34 @@ func (w *Button) Invoke() {
 	eval(fmt.Sprintf("%v invoke", w.id))
 }
 
-func ButtonAttrText(text string) *WidgetAttr {
-	return &WidgetAttr{"text", text}
-}
+// 简化
+// func ButtonAttrText(text string) *WidgetAttr {
+// 	return &WidgetAttr{"text", text}
+// }
 
-func ButtonAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
+// func ButtonAttrWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"width", width}
+// }
 
-func ButtonAttrImage(image *Image) *WidgetAttr {
-	if image == nil {
-		return nil
-	}
-	return &WidgetAttr{"image", image.Id()}
-}
+// func ButtonAttrImage(image *Image) *WidgetAttr {
+// 	if image == nil {
+// 		return nil
+// 	}
+// 	return &WidgetAttr{"image", image.Id()}
+// }
 
-func ButtonAttrCompound(compound Compound) *WidgetAttr {
-	return &WidgetAttr{"compound", compound}
-}
+// func ButtonAttrCompound(compound Compound) *WidgetAttr {
+// 	return &WidgetAttr{"compound", compound}
+// }
 
-func ButtonAttrPadding(padding Pad) *WidgetAttr {
-	return &WidgetAttr{"padding", padding}
-}
+// func ButtonAttrPadding(padding Pad) *WidgetAttr {
+// 	return &WidgetAttr{"padding", padding}
+// }
 
-func ButtonAttrState(state State) *WidgetAttr {
-	return &WidgetAttr{"state", state}
-}
+// func ButtonAttrState(state State) *WidgetAttr {
+// 	return &WidgetAttr{"state", state}
+// }
 
-func ButtonAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func ButtonAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
