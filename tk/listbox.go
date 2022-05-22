@@ -41,144 +41,151 @@ func (w *ListBox) Attach(id string) error {
 	return nil
 }
 
-func (w *ListBox) SetBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -background $atk_tmp_text", w.id))
-}
+// tk.NewListBox(parent Widget) ==> tk.ListBox, [ No ttk.ListBox ]
 
-func (w *ListBox) Background() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -background", w.id))
-	return r
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// tk key : 
 
-func (w *ListBox) SetBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *ListBox) SetBackground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -background $atk_tmp_text", w.id))
+// }
 
-func (w *ListBox) BorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
-	return r
-}
+// func (w *ListBox) Background() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -background", w.id))
+// 	return r
+// }
 
-func (w *ListBox) SetForground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -foreground $atk_tmp_text", w.id))
-}
+// func (w *ListBox) SetBorderWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
+// }
 
-func (w *ListBox) Forground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -foreground", w.id))
-	return r
-}
+// func (w *ListBox) BorderWidth() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
+// 	return r
+// }
 
-func (w *ListBox) SetReliefStyle(relief ReliefStyle) error {
-	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
-}
+// func (w *ListBox) SetForground(color string) error {
+// 	setObjText("atk_tmp_text", color)
+// 	return eval(fmt.Sprintf("%v configure -foreground $atk_tmp_text", w.id))
+// }
 
-func (w *ListBox) ReliefStyle() ReliefStyle {
-	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
-	return parserReliefStyleResult(r, err)
-}
+// func (w *ListBox) Forground() string {
+// 	r, _ := evalAsString(fmt.Sprintf("%v cget -foreground", w.id))
+// 	return r
+// }
 
-func (w *ListBox) SetFont(font Font) error {
-	if font == nil {
-		return ErrInvalid
-	}
-	return eval(fmt.Sprintf("%v configure -font {%v}", w.id, font.Id()))
-}
+// func (w *ListBox) SetReliefStyle(relief ReliefStyle) error {
+// 	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
+// }
 
-func (w *ListBox) Font() Font {
-	r, err := evalAsString(fmt.Sprintf("%v cget -font", w.id))
-	return parserFontResult(r, err)
-}
+// func (w *ListBox) ReliefStyle() ReliefStyle {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
+// 	return parserReliefStyleResult(r, err)
+// }
 
-func (w *ListBox) SetJustify(justify Justify) error {
-	if !mainInterp.SupportTk86() {
-		return ErrUnsupport
-	}
-	return eval(fmt.Sprintf("%v configure -justify {%v}", w.id, justify))
-}
+// func (w *ListBox) SetFont(font Font) error {
+// 	if font == nil {
+// 		return ErrInvalid
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -font {%v}", w.id, font.Id()))
+// }
 
-func (w *ListBox) Justify() Justify {
-	if !mainInterp.SupportTk86() {
-		return JustifyLeft
-	}
-	r, err := evalAsString(fmt.Sprintf("%v cget -justify", w.id))
-	return parserJustifyResult(r, err)
-}
+// func (w *ListBox) Font() Font {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -font", w.id))
+// 	return parserFontResult(r, err)
+// }
 
-func (w *ListBox) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
+// func (w *ListBox) SetJustify(justify Justify) error {
+// 	if !mainInterp.SupportTk86() {
+// 		return ErrUnsupport
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -justify {%v}", w.id, justify))
+// }
 
-func (w *ListBox) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
+// func (w *ListBox) Justify() Justify {
+// 	if !mainInterp.SupportTk86() {
+// 		return JustifyLeft
+// 	}
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -justify", w.id))
+// 	return parserJustifyResult(r, err)
+// }
 
-func (w *ListBox) SetHeight(height int) error {
-	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
-}
+// func (w *ListBox) SetWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
+// }
 
-func (w *ListBox) Height() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
-	return r
-}
+// func (w *ListBox) Width() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
+// 	return r
+// }
 
-func (w *ListBox) SetPaddingN(padx int, pady int) error {
-	if w.info.IsTtk {
-		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
-	}
-	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
-}
+// func (w *ListBox) SetHeight(height int) error {
+// 	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
+// }
 
-func (w *ListBox) PaddingN() (int, int) {
-	var r string
-	var err error
-	if w.info.IsTtk {
-		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
-	} else {
-		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
-		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
-		r = r1 + " " + r2
-	}
-	return parserPaddingResult(r, err)
-}
+// func (w *ListBox) Height() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
+// 	return r
+// }
 
-func (w *ListBox) SetPadding(pad Pad) error {
-	return w.SetPaddingN(pad.X, pad.Y)
-}
+// func (w *ListBox) SetPaddingN(padx int, pady int) error {
+// 	if w.info.IsTtk {
+// 		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
+// }
 
-func (w *ListBox) Padding() Pad {
-	x, y := w.PaddingN()
-	return Pad{x, y}
-}
+// func (w *ListBox) PaddingN() (int, int) {
+// 	var r string
+// 	var err error
+// 	if w.info.IsTtk {
+// 		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
+// 	} else {
+// 		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
+// 		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
+// 		r = r1 + " " + r2
+// 	}
+// 	return parserPaddingResult(r, err)
+// }
 
-func (w *ListBox) SetState(state State) error {
-	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
-}
+// func (w *ListBox) SetPadding(pad Pad) error {
+// 	return w.SetPaddingN(pad.X, pad.Y)
+// }
 
-func (w *ListBox) State() State {
-	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
-	return parserStateResult(r, err)
-}
+// func (w *ListBox) Padding() Pad {
+// 	x, y := w.PaddingN()
+// 	return Pad{x, y}
+// }
 
-func (w *ListBox) SetSelectMode(mode ListSelectMode) error {
-	return eval(fmt.Sprintf("%v configure -selectmode {%v}", w.id, mode))
-}
+// func (w *ListBox) SetState(state State) error {
+// 	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
+// }
 
-func (w *ListBox) SelectMode() ListSelectMode {
-	r, err := evalAsString(fmt.Sprintf("%v cget -selectmode", w.id))
-	return parserListSelectModeResult(r, err)
-}
+// func (w *ListBox) State() State {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
+// 	return parserStateResult(r, err)
+// }
 
-func (w *ListBox) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *ListBox) SetSelectMode(mode ListSelectMode) error {
+// 	return eval(fmt.Sprintf("%v configure -selectmode {%v}", w.id, mode))
+// }
 
-func (w *ListBox) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *ListBox) SelectMode() ListSelectMode {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -selectmode", w.id))
+// 	return parserListSelectModeResult(r, err)
+// }
+
+// func (w *ListBox) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
+
+// func (w *ListBox) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
 func (w *ListBox) SetItems(items []string) *ListBox {
 	mainInterp.SetStringList(variableId(w.id), items, true)
@@ -334,56 +341,57 @@ func NewListBoxEx(parent Widget, attributs ...*WidgetAttr) *ListBoxEx {
 	return w
 }
 
-func ListBoxAttrBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"background", color}
-}
+// 简化
+// func ListBoxAttrBackground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"background", color}
+// }
 
-func ListBoxAttrBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"borderwidth", width}
-}
+// func ListBoxAttrBorderWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"borderwidth", width}
+// }
 
-func ListBoxAttrForground(color string) *WidgetAttr {
-	return &WidgetAttr{"foreground", color}
-}
+// func ListBoxAttrForground(color string) *WidgetAttr {
+// 	return &WidgetAttr{"foreground", color}
+// }
 
-func ListBoxAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
-	return &WidgetAttr{"relief", relief}
-}
+// func ListBoxAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
+// 	return &WidgetAttr{"relief", relief}
+// }
 
-func ListBoxAttrFont(font Font) *WidgetAttr {
-	if font == nil {
-		return nil
-	}
-	return &WidgetAttr{"font", font.Id()}
-}
+// func ListBoxAttrFont(font Font) *WidgetAttr {
+// 	if font == nil {
+// 		return nil
+// 	}
+// 	return &WidgetAttr{"font", font.Id()}
+// }
 
-func ListBoxAttrJustify(justify Justify) *WidgetAttr {
-	if !mainInterp.SupportTk86() {
-		return nil
-	}
-	return &WidgetAttr{"justify", justify}
-}
+// func ListBoxAttrJustify(justify Justify) *WidgetAttr {
+// 	if !mainInterp.SupportTk86() {
+// 		return nil
+// 	}
+// 	return &WidgetAttr{"justify", justify}
+// }
 
-func ListBoxAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
+// func ListBoxAttrWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"width", width}
+// }
 
-func ListBoxAttrHeight(height int) *WidgetAttr {
-	return &WidgetAttr{"height", height}
-}
+// func ListBoxAttrHeight(height int) *WidgetAttr {
+// 	return &WidgetAttr{"height", height}
+// }
 
-func ListBoxAttrPadding(padding Pad) *WidgetAttr {
-	return &WidgetAttr{"padding", padding}
-}
+// func ListBoxAttrPadding(padding Pad) *WidgetAttr {
+// 	return &WidgetAttr{"padding", padding}
+// }
 
-func ListBoxAttrState(state State) *WidgetAttr {
-	return &WidgetAttr{"state", state}
-}
+// func ListBoxAttrState(state State) *WidgetAttr {
+// 	return &WidgetAttr{"state", state}
+// }
 
-func ListBoxAttrSelectMode(mode ListSelectMode) *WidgetAttr {
-	return &WidgetAttr{"selectmode", mode}
-}
+// func ListBoxAttrSelectMode(mode ListSelectMode) *WidgetAttr {
+// 	return &WidgetAttr{"selectmode", mode}
+// }
 
-func ListBoxAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func ListBoxAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
