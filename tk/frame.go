@@ -34,100 +34,113 @@ func (w *Frame) Attach(id string) error {
 	return nil
 }
 
-func (w *Frame) SetBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
-}
+// var useTkWidget = tk.WidgetAttrInitUseTheme(false)
+// tk.NewFrame(parent Widget) ==> ttk.Frame
+// tk.NewFrame(parent Widget, useTkWidget) ==> use tk.Frame
 
-func (w *Frame) BorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
-	return r
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// ttk key : 
+// tk key : "borderwidth","relief","background","cursor","height",
+// 			"highlightbackground","highlightcolor","highlightthickness",
+//			"padx","pady","takefocus","width"
 
-func (w *Frame) SetReliefStyle(relief ReliefStyle) error {
-	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
-}
+// 以下设置和属性获取使用ConfigSet、ConfigGet
+// func (w *Frame) SetBorderWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
+// }
 
-func (w *Frame) ReliefStyle() ReliefStyle {
-	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
-	return parserReliefStyleResult(r, err)
-}
+// func (w *Frame) BorderWidth() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
+// 	return r
+// }
 
-func (w *Frame) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
+// func (w *Frame) SetReliefStyle(relief ReliefStyle) error {
+// 	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
+// }
 
-func (w *Frame) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
+// func (w *Frame) ReliefStyle() ReliefStyle {
+// 	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
+// 	return parserReliefStyleResult(r, err)
+// }
 
-func (w *Frame) SetHeight(height int) error {
-	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
-}
+// func (w *Frame) SetWidth(width int) error {
+// 	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
+// }
 
-func (w *Frame) Height() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
-	return r
-}
+// func (w *Frame) Width() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
+// 	return r
+// }
 
-func (w *Frame) SetPaddingN(padx int, pady int) error {
-	if w.info.IsTtk {
-		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
-	}
-	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
-}
+// func (w *Frame) SetHeight(height int) error {
+// 	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
+// }
 
-func (w *Frame) PaddingN() (int, int) {
-	var r string
-	var err error
-	if w.info.IsTtk {
-		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
-	} else {
-		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
-		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
-		r = r1 + " " + r2
-	}
-	return parserPaddingResult(r, err)
-}
+// func (w *Frame) Height() int {
+// 	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
+// 	return r
+// }
 
-func (w *Frame) SetPadding(pad Pad) error {
-	return w.SetPaddingN(pad.X, pad.Y)
-}
+// func (w *Frame) SetPaddingN(padx int, pady int) error {
+// 	if w.info.IsTtk {
+// 		return eval(fmt.Sprintf("%v configure -padding {%v %v}", w.id, padx, pady))
+// 	}
+// 	return eval(fmt.Sprintf("%v configure -padx {%v} -pady {%v}", w.id, padx, pady))
+// }
 
-func (w *Frame) Padding() Pad {
-	x, y := w.PaddingN()
-	return Pad{x, y}
-}
+// func (w *Frame) PaddingN() (int, int) {
+// 	var r string
+// 	var err error
+// 	if w.info.IsTtk {
+// 		r, err = evalAsString(fmt.Sprintf("%v cget -padding", w.id))
+// 	} else {
+// 		r1, _ := evalAsString(fmt.Sprintf("%v cget -padx", w.id))
+// 		r2, _ := evalAsString(fmt.Sprintf("%v cget -pady", w.id))
+// 		r = r1 + " " + r2
+// 	}
+// 	return parserPaddingResult(r, err)
+// }
 
-func (w *Frame) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
+// func (w *Frame) SetPadding(pad Pad) error {
+// 	return w.SetPaddingN(pad.X, pad.Y)
+// }
 
-func (w *Frame) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
+// func (w *Frame) Padding() Pad {
+// 	x, y := w.PaddingN()
+// 	return Pad{x, y}
+// }
 
-func FrameAttrBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"borderwidth", width}
-}
+// func (w *Frame) SetTakeFocus(takefocus bool) error {
+// 	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
+// }
 
-func FrameAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
-	return &WidgetAttr{"relief", relief}
-}
+// func (w *Frame) IsTakeFocus() bool {
+// 	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
+// 	return r
+// }
 
-func FrameAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
+// 简化
+// func FrameAttrBorderWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"borderwidth", width}
+// }
 
-func FrameAttrHeight(height int) *WidgetAttr {
-	return &WidgetAttr{"height", height}
-}
+// func FrameAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
+// 	return &WidgetAttr{"relief", relief}
+// }
 
-func FrameAttrPadding(pad Pad) *WidgetAttr {
-	return &WidgetAttr{"pad", pad}
-}
+// func FrameAttrWidth(width int) *WidgetAttr {
+// 	return &WidgetAttr{"width", width}
+// }
 
-func FrameAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
+// func FrameAttrHeight(height int) *WidgetAttr {
+// 	return &WidgetAttr{"height", height}
+// }
+
+// func FrameAttrPadding(pad Pad) *WidgetAttr {
+// 	return &WidgetAttr{"pad", pad}
+// }
+
+// func FrameAttrTakeFocus(takefocus bool) *WidgetAttr {
+// 	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
+// }
