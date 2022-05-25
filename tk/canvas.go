@@ -36,191 +36,18 @@ func (w *Canvas) Attach(id string) error {
 	return nil
 }
 
-func (w *Canvas) SetBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -background $atk_tmp_text", w.id))
-}
+// tk.NewCanvas(parent Widget) ==> tk.Canvas
 
-func (w *Canvas) Background() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -background", w.id))
-	return r
-}
-
-func (w *Canvas) SetBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -borderwidth {%v}", w.id, width))
-}
-
-func (w *Canvas) BorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -borderwidth", w.id))
-	return r
-}
-
-func (w *Canvas) SetHighlightBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -highlightbackground $atk_tmp_text", w.id))
-}
-
-func (w *Canvas) HighlightBackground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -highlightbackground", w.id))
-	return r
-}
-
-func (w *Canvas) SetHighlightColor(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -highlightcolor $atk_tmp_text", w.id))
-}
-
-func (w *Canvas) HighlightColor() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -highlightcolor", w.id))
-	return r
-}
-
-func (w *Canvas) SetHighlightthickness(width int) error {
-	return eval(fmt.Sprintf("%v configure -highlightthickness {%v}", w.id, width))
-}
-
-func (w *Canvas) Highlightthickness() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -highlightthickness", w.id))
-	return r
-}
-
-func (w *Canvas) SetInsertBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -insertbackground $atk_tmp_text", w.id))
-}
-
-func (w *Canvas) InsertBackground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -insertbackground", w.id))
-	return r
-}
-
-func (w *Canvas) SetInsertBorderWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -insertborderwidth {%v}", w.id, width))
-}
-
-func (w *Canvas) InsertBorderWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -insertborderwidth", w.id))
-	return r
-}
-
-func (w *Canvas) SetInsertOffTime(offtime int) error {
-	return eval(fmt.Sprintf("%v configure -insertofftime {%v}", w.id, offtime))
-}
-
-func (w *Canvas) InsertOffTime() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -insertofftime", w.id))
-	return r
-}
-
-func (w *Canvas) SetInsertOnTime(ontime int) error {
-	return eval(fmt.Sprintf("%v configure -insertontime {%v}", w.id, ontime))
-}
-
-func (w *Canvas) InsertOnTime() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -insertontime", w.id))
-	return r
-}
-
-func (w *Canvas) SetInsertWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -insertwidth {%v}", w.id, width))
-}
-
-func (w *Canvas) InsertWidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -insertwidth", w.id))
-	return r
-}
-
-func (w *Canvas) SetReliefStyle(relief ReliefStyle) error {
-	return eval(fmt.Sprintf("%v configure -relief {%v}", w.id, relief))
-}
-
-func (w *Canvas) ReliefStyle() ReliefStyle {
-	r, err := evalAsString(fmt.Sprintf("%v cget -relief", w.id))
-	return parserReliefStyleResult(r, err)
-}
-
-func (w *Canvas) SetSelectBackground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -selectbackground $atk_tmp_text", w.id))
-}
-
-func (w *Canvas) SelectBackground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -selectbackground", w.id))
-	return r
-}
-
-func (w *Canvas) SetSelectborderwidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -selectborderwidth {%v}", w.id, width))
-}
-
-func (w *Canvas) Selectborderwidth() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -selectborderwidth", w.id))
-	return r
-}
-
-func (w *Canvas) SetSelectforeground(color string) error {
-	setObjText("atk_tmp_text", color)
-	return eval(fmt.Sprintf("%v configure -selectforeground $atk_tmp_text", w.id))
-}
-
-func (w *Canvas) Selectforeground() string {
-	r, _ := evalAsString(fmt.Sprintf("%v cget -selectforeground", w.id))
-	return r
-}
-
-func (w *Canvas) SetTakeFocus(takefocus bool) error {
-	return eval(fmt.Sprintf("%v configure -takefocus {%v}", w.id, boolToInt(takefocus)))
-}
-
-func (w *Canvas) IsTakeFocus() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -takefocus", w.id))
-	return r
-}
-
-func (w *Canvas) SetCloseEnough(closeenough float64) error {
-	return eval(fmt.Sprintf("%v configure -closeenough {%v}", w.id, closeenough))
-}
-
-func (w *Canvas) CloseEnough() float64 {
-	r, _ := evalAsFloat64(fmt.Sprintf("%v cget -closeenough", w.id))
-	return r
-}
-
-func (w *Canvas) SetConfine(confine bool) error {
-	return eval(fmt.Sprintf("%v configure -confine {%v}", w.id, boolToInt(confine)))
-}
-
-func (w *Canvas) IsConfine() bool {
-	r, _ := evalAsBool(fmt.Sprintf("%v cget -confine", w.id))
-	return r
-}
-
-func (w *Canvas) SetWidth(width int) error {
-	return eval(fmt.Sprintf("%v configure -width {%v}", w.id, width))
-}
-
-func (w *Canvas) Width() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -width", w.id))
-	return r
-}
-
-func (w *Canvas) SetHeight(height int) error {
-	return eval(fmt.Sprintf("%v configure -height {%v}", w.id, height))
-}
-
-func (w *Canvas) Height() int {
-	r, _ := evalAsInt(fmt.Sprintf("%v cget -height", w.id))
-	return r
-}
-
-func (w *Canvas) SetState(state State) error {
-	return eval(fmt.Sprintf("%v configure -state {%v}", w.id, state))
-}
-
-func (w *Canvas) State() State {
-	r, err := evalAsString(fmt.Sprintf("%v cget -state", w.id))
-	return parserStateResult(r, err)
-}
+// w.ConfigSet(key string, value string) error
+// w.ConfigGet(key string) string
+// 以下设置和属性获取使用ConfigSet和ConfigGet
+// tk  key :
+	// background,borderwidth,closeenough,confine,cursor,height,
+	// highlightbackground,highlightcolor,highlightthickness,
+	// insertbackground,insertborderwidth,insertofftime,insertontime,
+	// insertwidth,offset,relief,scrollregion,selectbackground,
+	// selectborderwidth,selectforeground,state,takefocus,width,
+	// xscrollcommand,xscrollincrement,yscrollcommand,yscrollincrement
 
 func (w *Canvas) SetXScrollIncrement(value int) error {
 	return eval(fmt.Sprintf("%v configure -xscrollincrement {%v}", w.id, value))
@@ -240,192 +67,226 @@ func (w *Canvas) YScrollIncrement() int {
 	return r
 }
 
-// Canvas Plot Geometry 
-func (w *Canvas) PlotLine(xy []Pos, options map[string]string) error {
-    // canvas create line x1 y1... xn yn ?option value ...? // 不闭合折线
-    // canvas create line 10 10 200 50 -fill red -width 3 -tags line1
-    
-    var tmp1 = ""
-    for _,pos := range xy {
-        tmp1 = tmp1 + strconv.Itoa(pos.X) + " " + strconv.Itoa(pos.Y) + " "
-    }
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create line %v%v", w.id, tmp1, tmp2))
+// **********新增****************
+
+// line（线）, polygon（多边形）, oval（圆或椭圆形）, 矩形, 扇形, 
+
+// pathName create line x1 y1... xn yn ?option value ...?
+func (w *Canvas) PlotLine(pots [][2]int, options ...[2]string) error {
+	// options: 
+	// -dash -activedash -disableddash -dashoffset -fill -activefill -disabledfil -stipple 
+	// -activestipple -disabledstipple -state -tags -width -activewidth -disabledwidth
+	
+	// extra options:
+	// -arrow, -arrowshape, -capstyle, -joinstyle, -smooth, -splinesteps
+
+	potall := ""
+	for _,v := range pots {
+		potall = potall + strconv.Itoa(v[0]) + " " + strconv.Itoa(v[1]) + " "
+	}
+	
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create line %v %v", w.id, potall, opts))
 }
 
-func (w *Canvas) PlotRectangle(x1,y1,x2,y2 int, options map[string]string) error {
-    // canvas create rectangle x1 y1 x2 y2 ?option value ...? // 矩形
-    // canvas create rectangle 10 10 200 50 -fill red -outline blue -tags rec1
+// pathName create polygon x1 y1 ... xn yn ?option value ...?
+func (w *Canvas) PlotPoly(pots [][2]int, options ...[2]string) error {
+	// options: 
+	// -dash  -activedash  -disableddash  -dashoffset  -fill  -activefill  -disabledfill
+	// -offset  -outline  -activeoutline  -disabledoutline  -outlineoffset  -outlinestipple
+	// -activeoutlinestipple  -disabledoutlinestipple  -stipple  -activestipple
+	// -disabledstipple  -state  -tags  -width  -activewidth  -disabledwidth
+	
+	// extra options:
+	// -joinstyle, -smooth, -splinesteps
 
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create rectangle %v %v %v %v %v", w.id, x1,y1,x2,y2, tmp2))
+	potall := ""
+	for _,v := range pots {
+		potall = potall + strconv.Itoa(v[0]) + " " + strconv.Itoa(v[1]) + " "
+	}
+	
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create polygon %v %v", w.id, potall, opts))
+}
+
+// pathName create rectangle x1 y1 x2 y2 ?option value ...?
+func (w *Canvas) PlotRec(rec [4]int, options ...[2]string) error {
+	// options:
+	// -dash  -activedash  -disableddash  -dashoffset  -fill  -activefill  -disabledfill  
+	// -offset  -outline  -activeoutline  -disabledoutline  -outlineoffset  -outlinestipple  
+	// -activeoutlinestipple  -disabledoutlinestipple  -stipple  -activestipple  
+	// -disabledstipple  -state  -tags  -width  -activewidth  -disabledwidth 
+	
+	x1,y1,x2,y2 := rec[0],rec[1],rec[2],rec[3]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create rectangle %v %v %v %v %v", w.id, x1, y1, x2, y2, opts))
+}
+
+// pathName create oval x1 y1 x2 y2 ?option value ...?
+func (w *Canvas) PlotOval(rec [4]int, options ...[2]string) error {
+	// options:
+	// -dash  -activedash  -disableddash  -dashoffset  -fill  -activefill  -disabledfill  
+	// -offset  -outline  -activeoutline  -disabledoutline  -outlineoffset  -outlinestipple  
+	// -activeoutlinestipple  -disabledoutlinestipple  -stipple  -activestipple  
+	// -disabledstipple  -state  -tags  -width  -activewidth  -disabledwidth  
+
+	x1,y1,x2,y2 := rec[0],rec[1],rec[2],rec[3]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create oval %v %v %v %v %v", w.id, x1, y1, x2, y2, opts))
+}
+
+// pathName create arc x1 y1 x2 y2 ?option value ...?
+func (w *Canvas) PlotArc(rec [4]int, options ...[2]string) error {
+	// options:
+	// -dash  -activedash  -disableddash  -dashoffset  -fill  -activefill  -disabledfill  
+	// -offset  -outline  -activeoutline  -disabledoutline  -outlineoffset  -outlinestipple  
+	// -activeoutlinestipple  -disabledoutlinestipple  -stipple  -activestipple  
+	// -disabledstipple  -state  -tags  -width  -activewidth  -disabledwidth  
+	
+	// extra options: 
+	// -extent, -start, -style
+	
+	x1,y1,x2,y2 := rec[0],rec[1],rec[2],rec[3]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create arc %v %v %v %v %v", w.id, x1, y1, x2, y2, opts))
+}
+
+// 文字，图片，控件
+// pathName create text x y ?option value ...?
+func (w *Canvas) PlotText(pos [2]int, text string, options ...[2]string) error {
+	// options:
+	// -anchor -fill -activefill -disabledfill -stipple 
+	// -activestipple -disabledstipple -state -tags
+	
+	// extra options: 
+	// -angle, -font, -justify, -text, -underline, -width
+	
+	// text 值含有空格时使用{}, text string : "{A wonderful story}"
+	x1,y1 := pos[0],pos[1]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create text %v %v -text %v %v", w.id, x1, y1, text, opts))
+}
+
+// pathName create image x y ?option value ...?
+func (w *Canvas) PlotImg(pos [2]int, imageid string, options ...[2]string) error {
+	// options:
+	// -anchor -state -tags
+	
+	// extra options: 
+	// -image, -activeimage, -disabledimage
+	
+	x1,y1 := pos[0],pos[1]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create image %v %v -image %v %v", w.id, x1, y1, imageid, opts))
+}
+
+// pathName create window x y ?option value ...?
+func (w *Canvas) PlotWin(pos [2]int, widgetid string, options ...[2]string) error {
+	// options:
+	// -anchor -state -tags
+	
+	// extra options: 
+	// -height, -width, -window
+	
+	x1,y1 := pos[0],pos[1]
+	opts := ""
+	for _,v := range options {
+		opts = opts + "-" + v[0] + " " + v[1] + " "
+	}
+	
+	return eval(fmt.Sprintf("%v create window %v %v -window %v %v", w.id, x1, y1, widgetid, opts))
 }
 
 
-func (w *Canvas) PlotOval(x1,y1,x2,y2 int, options map[string]string) error {
-    // canvas create oval x1 y1 x2 y2 ?option value ...?   // 矩形内切椭圆或圆
-    // canvas create oval 10 10 200 50 -fill red -outline blue -tags oval1
+// pathName bind tagOrId ?sequence? ?command?
 
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create oval %v %v %v %v %v", w.id, x1,y1,x2,y2, tmp2))
+
+// pathName delete ?tagOrId tagOrId ...?
+func (w *Canvas) DeleteTags(tagnames []string) error {
+	tags := ""
+	for _,v := range tagnames {
+		tags = tags + v + " "
+	}
+	return eval(fmt.Sprintf("%v delete %v", w.id, tags))
 }
 
-func (w *Canvas) PlotPolygon(xy []Pos, options map[string]string) error {
-    // canvas create polygon x1 y1 ... xn yn ?option value ...?  // 多边形
-    // canvas create polygon 10 10 180 90 20 45 -fill red -width 3 -tags pol1 
-    
-    var tmp1 = ""
-    for _,pos := range xy {
-        tmp1 = tmp1 + strconv.Itoa(pos.X) + " " + strconv.Itoa(pos.Y) + " "
-    }
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create polygon %v%v", w.id, tmp1, tmp2))
+// pathName itemcget tagOrId option
+func (w *Canvas) TagOptionGet(tagname string, option string) string {
+	res, _ := evalAsString(fmt.Sprintf("%v itemcget %v -%v", w.id, tagname, option))
+	return res
 }
 
-
-func (w *Canvas) PlotText(x1,y1 int, options map[string]string) error {
-    // canvas create text x y ?option value ...?  // 文字
-    // canvas create text 100 100 -text "A wonderful story" -anchor nw -fill black -tags txt1
-
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    // v 值含有空格时使用{}, "text":"{A wonderful story}"
-    
-	return eval(fmt.Sprintf("%v create text %v %v %v", w.id, x1,y1, tmp2))
+// pathName itemconfigure tagOrId ?option? ?value? ?option value ...?
+func (w *Canvas) TagOptionsSet(tagname string, optvalue ...[2]string) error {
+	optvalueset := ""
+	for _,v := range optvalue {
+		optvalueset = optvalueset + "-" +v[0] + " " + v[1] + " "
+	}
+	return eval(fmt.Sprintf("%v itemconfigure %v %v", w.id, tagname, optvalueset))
 }
 
-func (w *Canvas) PlotImage(x1,y1 int, options map[string]string) error {
-    // canvas create image x y ?option value ...?
-    // canvas create image 10 10 -image myimg -anchor nw
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create image %v %v %v", w.id, x1,y1, tmp2))
+// pathName scale tagOrId xOrigin yOrigin xScale yScale
+func (w *Canvas) TagScale(tagname string, x0 int, y0 int, xsc float64, ysc float64) error {
+
+	return eval(fmt.Sprintf("%v scale %v %v %v %v %v", w.id, tagname, x0, y0, xsc, ysc))
 }
 
-
-func (w *Canvas) PlotWidget(x1,y1 int, options map[string]string) error {
-    // canvas create window x y ?option value ...?
-    // canvas create window 10 10 -anchor nw -window .canvas.b
-    var tmp2 = ""
-    for k,v := range options {
-        tmp2 = tmp2 + "-" +k+ " " + v + " "
-    }
-    
-	return eval(fmt.Sprintf("%v create window %v %v %v", w.id, x1,y1, tmp2))
-}
-// 参考：
-// http://www.tcl-lang.org/man/tcl8.6/TkCmd/canvas.htm
-// https://tkdocs.com/tutorial/canvas.html
-// 例子：https://github.com/visualfc/atk/issues/16
-
-
-
-// WidgetAttr
-func CanvasAttrBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"background", color}
+// pathName coords tagOrId ?coordList?
+func (w *Canvas) TagCoordsGet(tagname string) string {
+	res, _ := evalAsString(fmt.Sprintf("%v coords %v", w.id, tagname))
+	return res
 }
 
-func CanvasAttrBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"borderwidth", width}
+// pathName raise tagOrId ?aboveThis?
+func (w *Canvas) TagRaise(raiseTag string, aboveTag string) error {
+
+	return eval(fmt.Sprintf("%v raise %v %v", w.id, raiseTag, aboveTag))
 }
 
-func CanvasAttrHighlightBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"highlightbackground", color}
+// pathName lower tagOrId ?belowThis?
+func (w *Canvas) TagLower(lowerTag string, belowTag string) error {
+
+	return eval(fmt.Sprintf("%v lower %v %v", w.id, lowerTag, belowTag))
 }
 
-func CanvasAttrHighlightColor(color string) *WidgetAttr {
-	return &WidgetAttr{"highlightcolor", color}
+// pathName move tagOrId xAmount yAmount
+func (w *Canvas) TagMove(moveTag string, dx int, dy int) error {
+
+	return eval(fmt.Sprintf("%v move %v %v %v", w.id, moveTag, dx, dy))
 }
 
-func CanvasAttrHighlightthickness(width int) *WidgetAttr {
-	return &WidgetAttr{"highlightthickness", width}
+// pathName moveto tagOrId xPos yPos
+func (w *Canvas) TagMoveTo(moveTag string, xpos int, ypos int) error {
+
+	return eval(fmt.Sprintf("%v moveto %v %v %v", w.id, moveTag, xpos, ypos))
 }
 
-func CanvasAttrInsertBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"insertbackground", color}
-}
-
-func CanvasAttrInsertBorderWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"insertborderwidth", width}
-}
-
-func CanvasAttrInsertOffTime(offtime int) *WidgetAttr {
-	return &WidgetAttr{"insertofftime", offtime}
-}
-
-func CanvasAttrInsertOnTime(ontime int) *WidgetAttr {
-	return &WidgetAttr{"insertontime", ontime}
-}
-
-func CanvasAttrInsertWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"insertwidth", width}
-}
-
-func CanvasAttrReliefStyle(relief ReliefStyle) *WidgetAttr {
-	return &WidgetAttr{"relief", relief}
-}
-
-func CanvasAttrSelectBackground(color string) *WidgetAttr {
-	return &WidgetAttr{"selectbackground", color}
-}
-
-func CanvasAttrSelectborderwidth(width int) *WidgetAttr {
-	return &WidgetAttr{"selectborderwidth", width}
-}
-
-func CanvasAttrSelectforeground(color string) *WidgetAttr {
-	return &WidgetAttr{"selectforeground", color}
-}
-
-func CanvasAttrTakeFocus(takefocus bool) *WidgetAttr {
-	return &WidgetAttr{"takefocus", boolToInt(takefocus)}
-}
-
-func CanvasAttrCloseEnough(closeenough float64) *WidgetAttr {
-	return &WidgetAttr{"closeenough", closeenough}
-}
-
-func CanvasAttrConfine(confine bool) *WidgetAttr {
-	return &WidgetAttr{"confine", boolToInt(confine)}
-}
-
-func CanvasAttrWidth(width int) *WidgetAttr {
-	return &WidgetAttr{"width", width}
-}
-
-func CanvasAttrHeight(height int) *WidgetAttr {
-	return &WidgetAttr{"height", height}
-}
-
-func CanvasAttrState(state State) *WidgetAttr {
-	return &WidgetAttr{"state", state}
-}
-
-func CanvasAttrXScrollIncrement(value int) *WidgetAttr {
-	return &WidgetAttr{"xscrollincrement", value}
-}
-
-func CanvasAttrYScrollIncrement(value int) *WidgetAttr {
-	return &WidgetAttr{"yscrollincrement", value}
-}
+// **********新增****************
